@@ -50,7 +50,7 @@ class RegisteredUserController extends Controller
                 'password' => Hash::make($request->password),
             ]);
 
-            event(new Registered($user));
+            // event(new Registered($user));
 
             $customer = new Customer();
             $names = explode(" ", $user->name);
@@ -61,6 +61,7 @@ class RegisteredUserController extends Controller
 
             Auth::login($user);
         } catch (\Exception $e) {
+            // dd($e->getMessage());
             DB::rollBack();
             return redirect()->back()->withInput()->with('error', 'Unable to register right now.');
         }
